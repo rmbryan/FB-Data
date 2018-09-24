@@ -12,5 +12,6 @@ Code provided for replication purposes
 Rebecca M. Bryan
 
 ## Acknowledgments
+Original coefficient plot code : https://github.com/dsparks
 
 
