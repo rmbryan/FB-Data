@@ -1,3 +1,4 @@
+#Statistical models, coefficient plots/tables for primary and secondary analyses of FBData2
 library(car)
 library(arm)
 library(stargazer)
@@ -13,7 +14,6 @@ library(MASS)
 library(vcd)
 library(psych)
 library(Hmisc)
-setwd("~/Box Sync/Research/Facebook Research 2015/2014 Voter Data/2015DatasetsMerged")
 d<- read.csv(file='https://raw.githubusercontent.com/rmbryan/FB-Data/master/FBData2.csv')
 #Models
 #Preliminary analysis 
@@ -60,7 +60,6 @@ allModelFrame <- data.frame(rbind(m1Frame, m2Frame, m3Frame))
 interval1 <- -qnorm((1-0.90)/2)  # 90% multiplier
 interval2 <- -qnorm((1-0.95)/2)  # 95% multiplier
 # Plot Logistic Regression Estimates
-dev.off()
 coefplot1 <- ggplot(allModelFrame, aes(x = Variable, y = Coefficient, shape= Model, colour = Model, group = Model)) +
   geom_point(aes(),size = 4, position=position_dodge(width=1/2))+
   geom_errorbar(aes(x = Variable, ymin = Coefficient - SE*interval2,
@@ -83,8 +82,6 @@ coefplot1 <- ggplot(allModelFrame, aes(x = Variable, y = Coefficient, shape= Mod
 coefplot1
 
 
-
-
 #Secondary analysis
 #Key: 18:25=1;>26=0(base)
 Model.1 <- glm(General2012 ~ Friendslog2012*YearsOnFb2012*AgeBi+  AgeBi +Friendslog2012+ YearsOnFb2012+ Female+ PartyID2012+ State, family = binomial,data = d) 
@@ -102,15 +99,15 @@ stargazer( Model.1, Model.2,  Model.3, title="Results", single.row=TRUE, omit = 
 m1Frame <- data.frame(Variable = rownames(summary(Model.1)$coef),
                       Coefficient = summary(Model.1)$coef[, 1],
                       SE = summary(Model.1)$coef[, 2],
-                      Model = "1. Facebook Use Only ")
+                      Model = "1. Age as binary variable")
 m2Frame <- data.frame(Variable = rownames(summary(Model.2)$coef),
                       Coefficient = summary(Model.2)$coef[, 1],
                       SE = summary(Model.2)$coef[, 2],
-                      Model = "2. Friends & Years (No Interaction)")
+                      Model = "2. Age as categorical")
 m3Frame <- data.frame(Variable = rownames(summary(Model.3)$coef),
                       Coefficient = summary(Model.3)$coef[, 1],
                       SE = summary(Model.3)$coef[, 2],
-                      Model = "3. Friends*Years (Interaction Included)")
+                      Model = "3. Age as numerical")
 
 #remove unnecessary Vars 
 m1Frame <- m1Frame[c(1, 2, 3,4,5,10), ]
@@ -122,14 +119,12 @@ m2Frame$Variable<- revalue(m2Frame$Variable, c( "Friendslog2012" = "log(Friends)
 m3Frame$Variable<- revalue(m3Frame$Variable, c( "Friendslog2012" = "log(Friends)", "YearsOnFb2012"="Years", "Friendslog2012:YearsOnFb2012"="Social Pressure (Friends*Years)", "PartyID20121" = "Democrat",  "StateOH" = "State(OH)","Age2012" = "Age(Numerical)", "Friendslog2012:YearsOnFb2012:Age2012"="Social Pressure Score*Age(Numerical)"))
 # Combine these data.frames
 allModelFrame <- data.frame(rbind(m1Frame, m2Frame, m3Frame))  # etc.
-
-# Specify the width of your confidence intervals
+# Specify confidence intervals
 interval1 <- -qnorm((1-0.90)/2)  # 90% multiplier
 interval2 <- -qnorm((1-0.95)/2)  # 95% multiplier
-
 # Plot Logistic Regression Estimates
-dev.off()
-plot2 <- ggplot(allModelFrame, aes(x = Variable, y = Coefficient, shape= Model, colour = Model, group = Model)) +
+
+coefplot2 <- ggplot(allModelFrame, aes(x = Variable, y = Coefficient, shape= Model, colour = Model, group = Model)) +
   geom_point(aes(),size = 4, position=position_dodge(width=1/2))+
   geom_errorbar(aes(x = Variable, ymin = Coefficient - SE*interval2,
                     ymax = Coefficient + SE*interval2), width=0,
@@ -147,4 +142,5 @@ plot2 <- ggplot(allModelFrame, aes(x = Variable, y = Coefficient, shape= Model, 
   theme(axis.title.y=element_blank())+
   scale_y_continuous(limits=c(-6,2)) + 
   coord_flip() 
-plot2                                                                                                                                                                 
+#view coef plot
+coefplot2                                                                                                                                                                 
