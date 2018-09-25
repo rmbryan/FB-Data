@@ -1,10 +1,10 @@
 # FB Data
 
-Dataset of 1000 registered voters and their Facebook presence/absence prior to the 2012 General Election.  
+FBData2 file: dataset of 1000 registered voters and their Facebook presence/absence prior to the 2012 General Election.  
 
 ## Getting Started
 
-Code provided for replication purposes 
+Code provided for replication purposes (Models/QI files)
 
 
 ## Authors
