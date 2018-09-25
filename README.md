@@ -13,5 +13,4 @@ Rebecca M. Bryan
 
 ## Acknowledgments
 Original coefficient plot code : https://github.com/dsparks
-
-
+Original code for predicted probabilities, first differences, second differences: https://github.com/carlislerainey
