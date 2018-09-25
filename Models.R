@@ -14,8 +14,7 @@ library(vcd)
 library(psych)
 library(Hmisc)
 setwd("~/Box Sync/Research/Facebook Research 2015/2014 Voter Data/2015DatasetsMerged")
-d<- read.csv(file='/Users/rebeccabryan/Box Sync/Research/Facebook Research 2015/2014 Voter Data/2015DatasetsMerged/FBData2.csv')
-
+d<- read.csv(file='https://raw.githubusercontent.com/rmbryan/FB-Data/master/FBData2.csv')
 #Models
 #Preliminary analysis 
 d$PartyID2012<- as.factor(d$PartyID2012)
@@ -119,7 +118,7 @@ m2Frame <- m2Frame[c(1, 2, 3,4,5, 6,7,8, 12, 14,21:23), ]
 m3Frame <- m3Frame[c(1:6, 10,12,15), ]
 #rename observations 
 m1Frame$Variable<- revalue(m1Frame$Variable, c( "Friendslog2012" = "log(Friends)", "YearsOnFb2012"="Years","PartyID20121" = "Democrat", "AgeBi" = "Age(Binary)", "StateOH" = "State(OH)"))
-m2Frame$Variable<- revalue(m2Frame$Variable, c( "Friendslog2012" = "log(Friends)", "YearsOnFb2012"="Years", "PartyID20121" = "Democrat", "AgeCat1"="Age=18:25(Categorical)","AgeCat2"="Age=26:31(Categorical)", "AgeCat3"="Age>60(Categorical)","StateOH" = "State(OH)", "Friendslog2012:YearsOnFb2012"="Social Pressure \n (Friends*Years)", "Friendslog2012:YearsOnFb2012:AgeCat1"="Social Pressure Score*Age=18:25(Categorical)","Friendslog2012:YearsOnFb2012:AgeCat2"="Social Pressure Score*Age=26:31(Categorical)","Friendslog2012:YearsOnFb2012:AgeCat3"="Social Pressure Score*Age$>$60(Categorical)"))
+m2Frame$Variable<- revalue(m2Frame$Variable, c( "Friendslog2012" = "log(Friends)", "YearsOnFb2012"="Years", "PartyID20121" = "Democrat", "AgeCat1"="Age=18:25(Categorical)","AgeCat2"="Age=26:31(Categorical)", "AgeCat3"="Age>60(Categorical)","StateOH" = "State(OH)", "Friendslog2012:YearsOnFb2012"="Social Pressure (Friends*Years)", "Friendslog2012:YearsOnFb2012:AgeCat1"="Social Pressure Score*Age=18:25(Categorical)","Friendslog2012:YearsOnFb2012:AgeCat2"="Social Pressure Score*Age=26:31(Categorical)","Friendslog2012:YearsOnFb2012:AgeCat3"="Social Pressure Score*Age$>$60(Categorical)"))
 m3Frame$Variable<- revalue(m3Frame$Variable, c( "Friendslog2012" = "log(Friends)", "YearsOnFb2012"="Years", "Friendslog2012:YearsOnFb2012"="Social Pressure (Friends*Years)", "PartyID20121" = "Democrat",  "StateOH" = "State(OH)","Age2012" = "Age(Numerical)", "Friendslog2012:YearsOnFb2012:Age2012"="Social Pressure Score*Age(Numerical)"))
 # Combine these data.frames
 allModelFrame <- data.frame(rbind(m1Frame, m2Frame, m3Frame))  # etc.
